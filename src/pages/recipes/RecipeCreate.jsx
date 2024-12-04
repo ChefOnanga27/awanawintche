@@ -49,14 +49,50 @@ function RecipeCreate() {
     }
   };
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      // Simuler l'envoi à l'API
-      console.log('Nouvelle recette:', values);
-      // Rediriger vers le profil après la création
-      navigate('/profile');
+      // Convertir les ingrédients et instructions en tableaux
+      const ingredientsArray = values.ingredients
+        .split('\n')
+        .filter(ingredient => ingredient.trim() !== '');
+      
+      const instructionsArray = values.instructions
+        .split('\n')
+        .filter(instruction => instruction.trim() !== '');
+
+      // Créer une nouvelle recette avec un ID unique
+      const newRecipe = {
+        id: Date.now(),
+        ...values,
+        ingredients: ingredientsArray,
+        instructions: instructionsArray,
+        image: imagePreview,
+        video: videoPreview,
+        createdAt: new Date().toISOString(),
+      };
+
+      // Récupérer les recettes existantes
+      const existingRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
+      
+      // Ajouter la nouvelle recette au tableau
+      const updatedRecipes = [newRecipe, ...existingRecipes];
+
+      // Sauvegarder dans le localStorage
+      localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+
+      // Réinitialiser le formulaire
+      resetForm();
+      setImagePreview(null);
+      setVideoPreview(null);
+
+      // Afficher un message de succès
+      alert('Recette créée avec succès !');
+
+      // Rediriger vers la page des recettes
+      navigate('/recipes');
     } catch (error) {
       console.error('Erreur lors de la création:', error);
+      alert('Une erreur est survenue lors de la création de la recette');
     } finally {
       setSubmitting(false);
     }
@@ -277,7 +313,7 @@ function RecipeCreate() {
                 <div className="flex justify-end space-x-4">
                   <button
                     type="button"
-                    onClick={() => navigate('/profile')}
+                    onClick={() => navigate('/recipes')}
                     className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                   >
                     Annuler
