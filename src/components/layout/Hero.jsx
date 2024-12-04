@@ -44,7 +44,7 @@ function Hero() {
   }, []);
 
   return (
-    <div className="relative h-[500px] overflow-hidden">
+    <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden">
       {featuredRecipes.map((recipe, index) => (
         <div
           key={recipe.id}
@@ -59,13 +59,21 @@ function Hero() {
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40">
-              <div className="container mx-auto px-6 h-full flex items-center">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
                 <div className="text-white max-w-lg">
-                  <h2 className="text-4xl font-bold mb-4">{recipe.title}</h2>
-                  <p className="text-xl mb-6">{recipe.description}</p>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-4">{recipe.title}</h2>
+                  <p className="text-base sm:text-lg lg:text-xl mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-none">{recipe.description}</p>
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                    <span className="text-sm sm:text-base bg-primary bg-opacity-80 px-3 py-1 rounded-full">
+                      {recipe.duration}
+                    </span>
+                    <span className="text-sm sm:text-base bg-primary bg-opacity-80 px-3 py-1 rounded-full">
+                      {recipe.difficulty}
+                    </span>
+                  </div>
                   <Link
                     to={`/recipes/${recipe.id}`}
-                    className="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg inline-block transition-colors"
+                    className="mt-4 sm:mt-6 bg-primary hover:bg-primary-dark text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg inline-block transition-colors text-sm sm:text-base"
                   >
                     Voir la recette
                   </Link>
@@ -81,7 +89,7 @@ function Hero() {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full ${
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${
               index === currentSlide ? 'bg-primary' : 'bg-white'
             }`}
           />
