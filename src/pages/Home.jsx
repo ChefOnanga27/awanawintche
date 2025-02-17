@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import RecipeCard from './recipes/RecipeCard';
 import Hero from '../components/layout/Hero';
 import { useAuth } from '../context/AuthContext';
+import SearchBar from '../components/layout/SearchBar'; // Importing SearchBar
 
 function Home() {
   const { user } = useAuth();
@@ -74,6 +75,9 @@ function Home() {
   return (
     <div className="container mx-auto px-4 py-8 bg-[#d8f3dc]"> {/* Fond vert clair */}
       <Hero />
+      
+      {/* Integrating SearchBar */}
+      <SearchBar />
 
       {!user && (
         <div className="my-8 bg-gradient-to-r from-green-500 to-green-600 rounded-xl overflow-hidden shadow-lg"> {/* Vert pur */}

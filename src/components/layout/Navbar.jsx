@@ -1,25 +1,17 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FiMenu, FiX, FiSearch } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 function Sidebar() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogout = () => {
     logout();
     navigate('/login');
     setIsSidebarOpen(false);
-  };
-
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      navigate(`/search?query=${searchQuery}`);
-      setIsSidebarOpen(false);
-    }
   };
 
   return (
@@ -39,23 +31,6 @@ function Sidebar() {
           <div className="flex items-center space-x-3 mb-6">
             <img src="/logo.jpg" alt="logo" className="h-8 w-8 rounded-full" />
             <Link to="/" className="text-xl font-bold text-white">Mon secret culinaire</Link>
-          </div>
-
-          {/* Barre de recherche */}
-          <div className="relative mb-4">
-            <input 
-              type="text" 
-              placeholder="Rechercher une recette..." 
-              className="w-full p-2 pl-10 rounded bg-green-700 text-white placeholder-gray-300 focus:outline-none"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            />
-            <FiSearch 
-              size={18} 
-              className="absolute left-3 top-3 text-gray-300 cursor-pointer"
-              onClick={handleSearch}
-            />
           </div>
 
           <nav className="flex flex-col space-y-4">

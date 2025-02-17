@@ -69,7 +69,7 @@ function Profile() {
         {message.text && (
           <div
             className={`mb-4 p-4 rounded-md ${
-              message.type === 'success' 
+              message.type === 'success'
                 ? 'bg-green-50 text-green-800 border border-green-400'
                 : 'bg-red-50 text-red-800 border border-red-400'
             }`}
@@ -80,7 +80,7 @@ function Profile() {
 
         {/* En-tête du profil avec bannière */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="relative h-48 bg-gradient-to-r from-primary to-primary-dark">
+          <div className="relative h-48 bg-gradient-to-r from-green-500 to-green-600">
             <div className="absolute -bottom-12 left-8">
               <div className="relative">
                 <img
@@ -89,7 +89,7 @@ function Profile() {
                   className="w-32 h-32 rounded-full border-4 border-white object-cover shadow-lg"
                 />
                 {isEditing && (
-                  <label className="absolute bottom-0 right-0 bg-white text-primary p-2 rounded-full cursor-pointer shadow-md hover:bg-gray-50 transition-colors">
+                  <label className="absolute bottom-0 right-0 bg-white text-green-500 p-2 rounded-full cursor-pointer shadow-md hover:bg-gray-50 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                     </svg>
@@ -129,9 +129,9 @@ function Profile() {
                       onClick={() => setIsEditing(!isEditing)}
                       className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors"
                       style={{
-                        backgroundColor: isEditing ? '#FFF' : '#4F46E5',
-                        color: isEditing ? '#4F46E5' : '#FFF',
-                        border: isEditing ? '1px solid #4F46E5' : 'none'
+                        backgroundColor: isEditing ? '#FFF' : '#10B981', // Vert pour "Modifier"
+                        color: isEditing ? '#10B981' : '#FFF',
+                        border: isEditing ? '1px solid #10B981' : 'none'
                       }}
                     >
                       {isEditing ? 'Annuler' : 'Modifier'}
@@ -146,7 +146,7 @@ function Profile() {
                           type="text"
                           name="name"
                           disabled={!isEditing}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
                         />
                         {errors.name && touched.name && (
                           <p className="mt-1 text-sm text-red-600">{errors.name}</p>
@@ -159,7 +159,7 @@ function Profile() {
                           type="email"
                           name="email"
                           disabled={!isEditing}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
                         />
                         {errors.email && touched.email && (
                           <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -175,7 +175,7 @@ function Profile() {
                           name="bio"
                           disabled={!isEditing}
                           rows={3}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
                         />
                       </div>
 
@@ -185,7 +185,7 @@ function Profile() {
                           type="text"
                           name="location"
                           disabled={!isEditing}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
                         />
                       </div>
                     </div>
@@ -196,7 +196,7 @@ function Profile() {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+                        className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
                       >
                         {isSubmitting ? 'Enregistrement...' : 'Enregistrer'}
                       </button>
