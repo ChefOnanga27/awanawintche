@@ -39,15 +39,15 @@ function Register() {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary-light py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-green-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-primary">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-green-600">
             Créer un compte
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Ou{' '}
-            <Link to="/login" className="font-medium text-primary hover:text-primary-dark">
+            <Link to="/login" className="font-medium text-green-600 hover:text-green-800">
               connectez-vous à votre compte existant
             </Link>
           </p>
@@ -64,7 +64,7 @@ function Register() {
                 name="name"
                 type="text"
                 {...formik.getFieldProps('name')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.name && formik.errors.name && (
                 <div className="text-red-500 text-sm mt-1">{formik.errors.name}</div>
@@ -81,7 +81,7 @@ function Register() {
                 type="email"
                 autoComplete="email"
                 {...formik.getFieldProps('email')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.email && formik.errors.email && (
                 <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
@@ -97,7 +97,7 @@ function Register() {
                 name="password"
                 type="password"
                 {...formik.getFieldProps('password')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.password && formik.errors.password && (
                 <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
@@ -113,7 +113,7 @@ function Register() {
                 name="confirmPassword"
                 type="password"
                 {...formik.getFieldProps('confirmPassword')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                 <div className="text-red-500 text-sm mt-1">{formik.errors.confirmPassword}</div>
@@ -124,9 +124,9 @@ function Register() {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
-              S'inscrire
+              S/inscrire
             </button>
           </div>
         </form>

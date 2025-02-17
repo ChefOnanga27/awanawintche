@@ -13,6 +13,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Authentification
 export const authApi = {
   login: async (credentials) => {
     // Simulation d'une réponse API
@@ -39,15 +40,16 @@ export const authApi = {
   }
 };
 
+// Mise à jour du profil utilisateur
 export const updateUserProfile = async (userData) => {
   try {
     // Simulation de l'API avec localStorage
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     const updatedUser = { ...currentUser, ...userData };
-    
+
     // Simuler un délai réseau
     await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     localStorage.setItem('user', JSON.stringify(updatedUser));
     return updatedUser;
   } catch (error) {
@@ -56,6 +58,7 @@ export const updateUserProfile = async (userData) => {
   }
 };
 
+// Téléchargement de l'avatar utilisateur
 export const uploadUserAvatar = async (file) => {
   try {
     // Vérification de la taille du fichier (max 5MB)

@@ -1,5 +1,4 @@
-// src/pages/recipes/RecipeDetail.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 function RecipeDetail() {
@@ -7,11 +6,8 @@ function RecipeDetail() {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchRecipe();
-  }, [id]);
-
-  const fetchRecipe = async () => {
+  // Utilisation de useCallback pour mémoriser la fonction fetchRecipe
+  const fetchRecipe = useCallback(async () => {
     try {
       // Simuler un appel API
       const data = {
@@ -52,12 +48,17 @@ function RecipeDetail() {
       console.error('Erreur lors du chargement de la recette:', error);
       setLoading(false);
     }
-  };
+  }, [id]);  // 'id' est maintenant inclus dans la dépendance de useCallback
+
+  // Utilisation de useEffect pour appeler fetchRecipe
+  useEffect(() => {
+    fetchRecipe();
+  }, [fetchRecipe]);  // 'fetchRecipe' est inclus ici pour éviter l'avertissement d'ESLint
 
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -66,8 +67,8 @@ function RecipeDetail() {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
         <h1 className="text-2xl text-gray-600">Recette non trouvée</h1>
-        <Link to="/" className="text-primary hover:text-primary-dark">
-          Retour à l'accueil
+        <Link to="/" className="text-green-500 hover:text-green-700">
+          Retour à l/accueil
         </Link>
       </div>
     );
@@ -95,15 +96,15 @@ function RecipeDetail() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div className="bg-white rounded-lg shadow p-4">
             <h3 className="font-semibold text-gray-700 mb-2">Temps de préparation</h3>
-            <p className="text-2xl text-primary">{recipe.prepTime} min</p>
+            <p className="text-2xl text-green-500">{recipe.prepTime} min</p>
           </div>
           <div className="bg-white rounded-lg shadow p-4">
             <h3 className="font-semibold text-gray-700 mb-2">Temps de cuisson</h3>
-            <p className="text-2xl text-primary">{recipe.cookTime} min</p>
+            <p className="text-2xl text-green-500">{recipe.cookTime} min</p>
           </div>
           <div className="bg-white rounded-lg shadow p-4">
             <h3 className="font-semibold text-gray-700 mb-2">Note</h3>
-            <p className="text-2xl text-primary">⭐ {recipe.rating}/5</p>
+            <p className="text-2xl text-green-500">⭐ {recipe.rating}/5</p>
           </div>
         </div>
 
@@ -112,11 +113,11 @@ function RecipeDetail() {
           {/* Ingrédients */}
           <div className="md:col-span-1">
             <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-primary mb-4">Ingrédients</h2>
+              <h2 className="text-2xl font-bold text-green-500 mb-4">Ingrédients</h2>
               <ul className="space-y-2">
                 {recipe.ingredients.map((ingredient, index) => (
                   <li key={index} className="flex items-center">
-                    <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                     {ingredient}
                   </li>
                 ))}
@@ -127,11 +128,11 @@ function RecipeDetail() {
           {/* Instructions */}
           <div className="md:col-span-2">
             <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-primary mb-4">Instructions</h2>
+              <h2 className="text-2xl font-bold text-green-500 mb-4">Instructions</h2>
               <ol className="space-y-4">
                 {recipe.instructions.map((instruction, index) => (
                   <li key={index} className="flex">
-                    <span className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">
+                    <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mr-3">
                       {index + 1}
                     </span>
                     <p className="pt-1">{instruction}</p>
@@ -148,7 +149,7 @@ function RecipeDetail() {
             <div>
               <p className="text-gray-600">
                 Publié par{' '}
-                <Link to={`/user/${recipe.author.id}`} className="text-primary hover:text-primary-dark">
+                <Link to={`/user/${recipe.author.id}`} className="text-green-500 hover:text-green-700">
                   {recipe.author.name}
                 </Link>
               </p>
@@ -161,10 +162,10 @@ function RecipeDetail() {
               </p>
             </div>
             <div className="space-x-4">
-              <button className="text-gray-600 hover:text-primary">
+              <button className="text-gray-600 hover:text-green-500">
                 Sauvegarder ❤️
               </button>
-              <button className="text-gray-600 hover:text-primary">
+              <button className="text-gray-600 hover:text-green-500">
                 Partager 🔗
               </button>
             </div>

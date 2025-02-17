@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import PropTypes from 'prop-types'; // Import PropTypes
 
 function RecipeCard({ recipe }) {
   const { user } = useAuth();
@@ -54,7 +55,7 @@ function RecipeCard({ recipe }) {
         {/* Bouton Commentaires */}
         <button
           onClick={() => setShowComments(!showComments)}
-          className="text-primary hover:text-primary-dark font-medium"
+          className="text-green-500 hover:text-green-700 font-medium" // Applique le vert
         >
           {showComments ? 'Masquer les commentaires' : `Voir les commentaires (${comments.length})`}
         </button>
@@ -82,11 +83,11 @@ function RecipeCard({ recipe }) {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Ajouter un commentaire..."
-                  className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+                  className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50" // Vert au focus
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50"
+                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-500 focus:ring-opacity-50" // Vert
                 >
                   Publier
                 </button>
@@ -98,5 +99,16 @@ function RecipeCard({ recipe }) {
     </div>
   );
 }
+
+// Define prop types for validation
+RecipeCard.propTypes = {
+  recipe: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    duration: PropTypes.string.isRequired,
+    difficulty: PropTypes.string.isRequired
+  }).isRequired
+};
 
 export default RecipeCard;

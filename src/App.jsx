@@ -2,11 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
-// Layout Components
-import Navbar from './components/layout/Navbar';
+// composants Layout
+import Sidebar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 
-// Page Components
+// Page Composants
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -19,8 +19,8 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-secondary-light flex flex-col">
-          <Navbar />
+        <div className="min-h-screen bg-secondary-black flex flex-col">
+          <Sidebar />
           
           <main className="flex-grow container mx-auto px-4 py-8">
             <Routes>
