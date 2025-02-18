@@ -1,9 +1,11 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function Register() {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -11,10 +13,10 @@ function Register() {
       email: '',
       password: '',
       confirmPassword: '',
-      role: 'user' // Valeur par défaut pour le rôle
+      role: 'user',
     },
     validationSchema: Yup.object({
-      name: Yup.string()
+      username: Yup.string()
         .required('Nom requis')
         .min(2, 'Le nom doit contenir au moins 2 caractères'),
       email: Yup.string()
@@ -28,11 +30,13 @@ function Register() {
         .required('Confirmation du mot de passe requise'),
       role: Yup.string()
         .oneOf(['user', 'admin'], 'Le rôle doit être soit "user" soit "admin"')
-        .required('Rôle requis')
+        .required('Rôle requis'),
     }),
     onSubmit: async (values) => {
+      setErrorMessage(''); // Réinitialiser l'erreur avant soumission
+      console.log('Données soumises:', values); // Vérifier si les valeurs sont bien récupérées
+
       try {
-        // Envoi des données à l'API
         const response = await fetch('https://restaurant-backend-snowy.vercel.app/auth/register', {
           method: 'POST',
           headers: {
@@ -41,18 +45,19 @@ function Register() {
           body: JSON.stringify(values),
         });
 
-        // Vérifier si l'inscription a réussi
         if (response.ok) {
           console.log('Inscription réussie');
-          navigate('/login'); // Rediriger vers la page de login
+          navigate('/login');
         } else {
           const data = await response.json();
-          console.error('Erreur d\'inscription:', data.message);
+          setErrorMessage(data.message || "Erreur lors de l'inscription");
+          console.error("Erreur d'inscription:", data.message);
         }
       } catch (error) {
-        console.error('Erreur lors de l\'inscription:', error);
+        setErrorMessage("Impossible de se connecter au serveur.");
+        console.error("Erreur lors de l'inscription:", error);
       }
-    }
+    },
   });
 
   return (
@@ -70,6 +75,10 @@ function Register() {
           </p>
         </div>
 
+        {errorMessage && (
+          <div className="text-red-500 text-sm text-center">{errorMessage}</div>
+        )}
+
         <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
@@ -80,11 +89,13 @@ function Register() {
                 id="username"
                 name="username"
                 type="text"
-                {...formik.getFieldProps('username')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
-              {formik.touched.name && formik.errors.name && (
-                <div className="text-red-500 text-sm mt-1">{formik.errors.name}</div>
+              {formik.touched.username && formik.errors.username && (
+                <div className="text-red-500 text-sm mt-1">{formik.errors.username}</div>
               )}
             </div>
 
@@ -96,9 +107,10 @@ function Register() {
                 id="email"
                 name="email"
                 type="email"
-                autoComplete="email"
-                {...formik.getFieldProps('email')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.email && formik.errors.email && (
                 <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
@@ -113,8 +125,10 @@ function Register() {
                 id="password"
                 name="password"
                 type="password"
-                {...formik.getFieldProps('password')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.password && formik.errors.password && (
                 <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
@@ -129,15 +143,16 @@ function Register() {
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                {...formik.getFieldProps('confirmPassword')}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                 <div className="text-red-500 text-sm mt-1">{formik.errors.confirmPassword}</div>
               )}
             </div>
 
-            {/* Champ de sélection pour le rôle */}
             <div>
               <label htmlFor="role" className="block text-sm font-medium text-gray-700">
                 Rôle
@@ -145,7 +160,9 @@ function Register() {
               <select
                 id="role"
                 name="role"
-                {...formik.getFieldProps('role')}
+                value={formik.values.role}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               >
                 <option value="user">Utilisateur</option>
