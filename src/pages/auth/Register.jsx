@@ -33,7 +33,7 @@ function Register() {
     onSubmit: async (values) => {
       try {
         // Envoi des données à l'API
-        const response = await fetch('https://restaurant-backend-snowy.vercel.app/register', {
+        const response = await fetch('https://restaurant-backend-snowy.vercel.app/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
