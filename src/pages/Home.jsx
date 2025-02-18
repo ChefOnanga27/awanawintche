@@ -15,27 +15,27 @@ function Home() {
     const recipes = [
       {
         id: 1,
-        title: 'Poulet Rôti aux Herbes',
+        title: 'Antilope au chocolat',
         description: 'Un délicieux poulet rôti avec des herbes fraîches',
-        image: '/poulet_roti.jpg',
+        image: '/antilope.jpg',
         duration: '1h30',
         difficulty: 'Moyen',
         createdAt: '2024-01-15'
       },
       {
         id: 2,
-        title: 'Salade César',
+        title: 'Poulet Roti',
         description: 'Une salade césar classique avec sauce maison',
-        image: '/salade_cesar.jpg',
+        image: '/poulet roti.jpg',
         duration: '20min',
         difficulty: 'Facile',
         createdAt: '2024-01-14'
       },
       {
         id: 3,
-        title: 'Tarte aux Pommes',
+        title: 'Chou au poisson',
         description: 'Une tarte aux pommes traditionnelle',
-        image: '/tarte_aux_pommes.jpg',
+        image: '/chou.jpg',
         duration: '1h',
         difficulty: 'Moyen',
         createdAt: '2023-12-25'
