@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';  // Importer PropTypes
-import { authApi } from '../services/api';
+import { authApi } from '../services/api';  // Assurez-vous d'importer votre api
 
 const AuthContext = createContext(null);
 
@@ -10,17 +10,6 @@ export function AuthProvider({ children }) {
 
   // Vérification de l'utilisateur lors du chargement de la page
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-    
-    if (token && savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));  // Tentative de parse sécurisée
-      } catch (error) {
-        console.error('Erreur de lecture des données utilisateur:', error);
-      }
-    }
-
     setLoading(false);  // Terminer le chargement
   }, []);
 
@@ -30,9 +19,7 @@ export function AuthProvider({ children }) {
     try {
       const response = await authApi.login(credentials);
       if (response.token && response.user) {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        setUser(response.user);
+        setUser(response.user);  // Mettre à jour l'utilisateur dans l'état
         return response.user;
       }
       throw new Error('Réponse du serveur invalide');
@@ -50,9 +37,7 @@ export function AuthProvider({ children }) {
     try {
       const response = await authApi.register(userData);
       if (response.token && response.user) {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        setUser(response.user);
+        setUser(response.user);  // Mettre à jour l'utilisateur dans l'état
         return response.user;
       }
       throw new Error('Réponse du serveur invalide');
@@ -66,9 +51,7 @@ export function AuthProvider({ children }) {
 
   // Fonction de déconnexion
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
+    setUser(null);  // Réinitialiser l'utilisateur dans l'état
   };
 
   // Mise à jour de l'utilisateur dans le contexte
@@ -98,6 +81,7 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,  // Valider que 'children' est un élément React
 };
 
+// Hook personnalisé pour accéder au contexte d'authentification
 export function useAuth() {
   return useContext(AuthContext);
 }

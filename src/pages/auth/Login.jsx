@@ -18,8 +18,27 @@ function Login() {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      await login(values);
-      navigate('/profile');
+      // Appel à l'API pour se connecter et récupérer le rôle
+      const response = await fetch('https://restaurant-backend-snowy.vercel.app/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const { token, role } = data; // Récupérer le token et le rôle depuis la réponse de l'API
+
+        // Sauvegarder le token et le rôle (exemple avec le contexte)
+        login(token, role);
+
+        navigate('/profile'); // Rediriger vers la page de profil
+      } else {
+        const data = await response.json();
+        setErrors({ submit: data.message || 'Erreur de connexion' });
+      }
     } catch (error) {
       setErrors({ submit: error.message || 'Une erreur est survenue' });
     } finally {

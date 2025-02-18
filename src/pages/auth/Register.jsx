@@ -1,4 +1,3 @@
-// src/pages/auth/Register.jsx
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,7 +10,8 @@ function Register() {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      role: 'user' // Valeur par défaut pour le rôle
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -25,13 +25,30 @@ function Register() {
         .required('Mot de passe requis'),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Les mots de passe doivent correspondre')
-        .required('Confirmation du mot de passe requise')
+        .required('Confirmation du mot de passe requise'),
+      role: Yup.string()
+        .oneOf(['user', 'admin'], 'Le rôle doit être soit "user" soit "admin"')
+        .required('Rôle requis')
     }),
     onSubmit: async (values) => {
       try {
-        // Simuler un appel API
-        console.log('Inscription avec:', values);
-        navigate('/login');
+        // Envoi des données à l'API
+        const response = await fetch('https://restaurant-backend-snowy.vercel.app/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+
+        // Vérifier si l'inscription a réussi
+        if (response.ok) {
+          console.log('Inscription réussie');
+          navigate('/login'); // Rediriger vers la page de login
+        } else {
+          const data = await response.json();
+          console.error('Erreur d\'inscription:', data.message);
+        }
       } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
       }
@@ -119,6 +136,25 @@ function Register() {
                 <div className="text-red-500 text-sm mt-1">{formik.errors.confirmPassword}</div>
               )}
             </div>
+
+            {/* Champ de sélection pour le rôle */}
+            <div>
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                Rôle
+              </label>
+              <select
+                id="role"
+                name="role"
+                {...formik.getFieldProps('role')}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
+              >
+                <option value="user">Utilisateur</option>
+                <option value="admin">Administrateur</option>
+              </select>
+              {formik.touched.role && formik.errors.role && (
+                <div className="text-red-500 text-sm mt-1">{formik.errors.role}</div>
+              )}
+            </div>
           </div>
 
           <div>
@@ -126,7 +162,7 @@ function Register() {
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
-              S/inscrire
+              S'inscrire
             </button>
           </div>
         </form>

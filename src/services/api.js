@@ -1,93 +1,76 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://restaurant-backend-snowy.vercel.app/', // Remplace par l'URL correcte de ton API
 });
 
-// Intercepteur pour ajouter le token aux requêtes
+// Intercepteur pour ajouter le token aux requêtes (sans localStorage)
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (config.requiresAuth && config.headers.Authorization === undefined) {
+    return Promise.reject(new Error("Authentification requise"));
   }
   return config;
 });
 
-// Authentification
+// ✅ Authentification (connexion et inscription)
 export const authApi = {
   login: async (credentials) => {
-    // Simulation d'une réponse API
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return {
-      token: 'fake-jwt-token',
-      user: {
-        email: credentials.email,
-        name: 'Utilisateur Test'
-      }
-    };
+    try {
+      const response = await api.post('/auth/login', credentials);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || 'Erreur de connexion';
+    }
   },
   
   register: async (userData) => {
-    // Simulation d'une réponse API
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return {
-      token: 'fake-jwt-token',
-      user: {
-        email: userData.email,
-        name: userData.name
-      }
-    };
+    try {
+      const response = await api.post('/auth/register', userData);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || 'Erreur lors de l\'inscription';
+    }
   }
 };
 
-// Mise à jour du profil utilisateur
-export const updateUserProfile = async (userData) => {
+// ✅ Mise à jour du profil utilisateur
+export const updateUserProfile = async (userData, token) => {
   try {
-    // Simulation de l'API avec localStorage
-    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-    const updatedUser = { ...currentUser, ...userData };
-
-    // Simuler un délai réseau
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    localStorage.setItem('user', JSON.stringify(updatedUser));
-    return updatedUser;
+    const response = await api.put('/users/profile', userData, {
+      headers: { Authorization: `Bearer ${token}` },
+      requiresAuth: true,
+    });
+    return response.data;
   } catch (error) {
-    console.error('Erreur lors de la mise à jour du profil:', error);
-    throw new Error('Impossible de mettre à jour le profil. Veuillez réessayer.');
+    throw error.response?.data || 'Erreur lors de la mise à jour du profil';
   }
 };
 
-// Téléchargement de l'avatar utilisateur
-export const uploadUserAvatar = async (file) => {
+// ✅ Téléchargement de l'avatar utilisateur
+export const uploadUserAvatar = async (file, token) => {
   try {
-    // Vérification de la taille du fichier (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       throw new Error('La taille du fichier ne doit pas dépasser 5MB');
     }
 
-    // Vérification du type de fichier
     if (!file.type.startsWith('image/')) {
       throw new Error('Seules les images sont acceptées');
     }
 
-    // Simulation du téléchargement
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const formData = new FormData();
+    formData.append('avatar', file);
 
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        // Stocker l'URL de l'image dans le localStorage
-        const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-        currentUser.avatar = reader.result;
-        localStorage.setItem('user', JSON.stringify(currentUser));
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(file);
+    const response = await api.post('/users/upload-avatar', formData, {
+      headers: { 
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      },
+      requiresAuth: true,
     });
+
+    return response.data;
   } catch (error) {
-    console.error('Erreur lors du téléchargement de l\'avatar:', error);
-    throw error.message || 'Impossible de télécharger l\'avatar. Veuillez réessayer.';
+    throw error.response?.data || 'Erreur lors du téléchargement de l\'avatar';
   }
 };
 
