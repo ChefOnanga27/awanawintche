@@ -7,7 +7,7 @@ function Register() {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      username: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -73,14 +73,14 @@ function Register() {
         <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                 Nom complet
               </label>
               <input
-                id="name"
-                name="name"
+                id="username"
+                name="username"
                 type="text"
-                {...formik.getFieldProps('name')}
+                {...formik.getFieldProps('username')}
                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
               {formik.touched.name && formik.errors.name && (
