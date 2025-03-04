@@ -37,7 +37,7 @@ function Register() {
       console.log('Données soumises:', values); // Vérifier si les valeurs sont bien récupérées
 
       try {
-        const response = await fetch('https://restaurant-backend-ssvu.onrender.com/auth/register', {
+        const response = await fetch('https://restaurant-backend-git-main-chefonanga27s-projects.vercel.app/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
