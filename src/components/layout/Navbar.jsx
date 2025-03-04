@@ -15,7 +15,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="flex bg-green-700 text-white">
+    <div className="flex bg-green-800 text-white">
       {/* Bouton pour ouvrir la sidebar */}
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
@@ -26,7 +26,7 @@ function Sidebar() {
 
       {/* Sidebar */}
       <div 
-        className={`fixed top-0 left-0 h-full w-64 bg-green-800 text-white shadow-lg transform transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} duration-300`}>
+        className={`fixed top-0 left-0 h-full w-64 bg-green-900 text-white shadow-lg transform transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} duration-300`}>
         <div className="p-5">
           <div className="flex items-center space-x-3 mb-6">
             <img src="/logo.jpg" alt="logo" className="h-8 w-8 rounded-full" />

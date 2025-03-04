@@ -2,7 +2,7 @@ import { FaPizzaSlice, FaHamburger, FaAppleAlt, FaUtensils } from 'react-icons/f
 
 function Hero() {
   return (
-    <div className="h-10 bg-green-600 text-white flex justify-between items-center px-6 shadow-md">
+    <div className="h-10 bg-green-800 text-white flex justify-between items-center px-6 shadow-md">
       <div className="flex space-x-4">
         <FaPizzaSlice size={22} />
         <FaHamburger size={22} />

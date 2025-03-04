@@ -85,7 +85,7 @@ function Home() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div> {/* Vert pur au lieu du rouge */}
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-800"></div> {/* Vert pur au lieu du rouge */}
       </div>
     );
   }
@@ -98,7 +98,7 @@ function Home() {
       <SearchBar />
 
       {!user && (
-        <div className="my-8 bg-gradient-to-r from-green-500 to-green-600 rounded-xl overflow-hidden shadow-lg"> {/* Vert pur */}
+        <div className="my-8 bg-gradient-to-r from-green-800 to-green-900 rounded-xl overflow-hidden shadow-lg"> {/* Vert pur */}
           <div className="px-6 py-8 sm:px-8 md:px-12 flex flex-col sm:flex-row items-center justify-between">
             <div className="text-white text-center sm:text-left mb-6 sm:mb-0">
               <h2 className="text-2xl sm:text-3xl font-bold mb-2">Partagez Vos Recettes !</h2>
