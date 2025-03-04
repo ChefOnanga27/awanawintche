@@ -17,7 +17,7 @@ function Home() {
         id: 1,
         title: 'Antilope au chocolat',
         description: 'Un délicieux poulet rôti avec des herbes fraîches',
-        image: '/antilope.jpg',
+        image: '/poulet roti.jpg',
         duration: '1h30',
         difficulty: 'Moyen',
         createdAt: '2024-01-15'
@@ -30,6 +30,24 @@ function Home() {
         duration: '20min',
         difficulty: 'Facile',
         createdAt: '2024-01-14'
+      },
+      {
+        id: 3,
+        title: 'Chou au poisson',
+        description: 'Une tarte aux pommes traditionnelle',
+        image: '/chou.jpg',
+        duration: '1h',
+        difficulty: 'Moyen',
+        createdAt: '2023-12-25'
+      },
+      {
+        id: 4,
+        title: 'Ratatouille',
+        description: 'Un plat végétarien traditionnel français',
+        image: '/ratatouille.jpg',
+        duration: '1h15',
+        difficulty: 'Facile',
+        createdAt: '2023-12-20'
       },
       {
         id: 3,
