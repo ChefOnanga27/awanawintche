@@ -1,3 +1,4 @@
+// src/components/auth/Login.jsx
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -18,7 +19,6 @@ function Login() {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      // Appel à l'API pour se connecter et récupérer le rôle
       const response = await fetch('https://resto-back-qsyz.onrender.com/api/user/login', {
         method: 'POST',
         headers: {
@@ -29,9 +29,9 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        const { token, role } = data; // Récupérer le token et le rôle depuis la réponse de l'API
+        const { token, role } = data; // Récupérer le token et le rôle
 
-        // Sauvegarder le token et le rôle (exemple avec le contexte)
+        // Appel de la fonction login dans le contexte
         login(token, role);
 
         navigate('/profile'); // Rediriger vers la page de profil

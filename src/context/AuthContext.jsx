@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import { createContext, useState, useEffect, useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,21 +12,12 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = async (credentials) => {
+  const login = (token, role) => {
     setLoading(true);
     try {
-      const response = await fetch('https://resto-back-qsyz.onrender.com/api/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setUser(data.user);
-        return data.user;
-      }
-      throw new Error(data.message || 'Identifiants invalides');
+      // Sauvegarde du token et du rôle dans le contexte (par exemple dans localStorage ou directement dans le contexte)
+      localStorage.setItem('token', token); // Si vous souhaitez garder le token dans le stockage local
+      setUser({ token, role });
     } catch (error) {
       console.error('Erreur de connexion:', error);
       throw new Error('Erreur de connexion');
@@ -59,6 +51,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('token');
   };
 
   const updateUser = (userData) => {
@@ -80,7 +73,6 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-// ✅ Ajout de `useAuth`
 export function useAuth() {
   return useContext(AuthContext);
 }
