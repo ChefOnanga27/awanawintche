@@ -1,6 +1,5 @@
-import { createContext, useState, useContext, useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';  // Importer PropTypes
-import { authApi } from '../services/api';  // Assurez-vous d'importer votre api
+import { createContext, useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 const AuthContext = createContext(null);
 
@@ -8,65 +7,66 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Vérification de l'utilisateur lors du chargement de la page
   useEffect(() => {
-    setLoading(false);  // Terminer le chargement
+    setLoading(false);
   }, []);
 
-  // Fonction de login
   const login = async (credentials) => {
-    setLoading(true); // Démarrer le chargement pendant la tentative de connexion
+    setLoading(true);
     try {
-      const response = await authApi.login(credentials);
-      if (response.token && response.user) {
-        setUser(response.user);  // Mettre à jour l'utilisateur dans l'état
-        return response.user;
+      const response = await fetch('https://resto-back-qsyz.onrender.com/api/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setUser(data.user);
+        return data.user;
       }
-      throw new Error('Réponse du serveur invalide');
+      throw new Error(data.message || 'Identifiants invalides');
     } catch (error) {
       console.error('Erreur de connexion:', error);
-      throw new Error('Identifiants invalides ou problème de connexion');
+      throw new Error('Erreur de connexion');
     } finally {
-      setLoading(false); // Terminer le chargement après la tentative de connexion
+      setLoading(false);
     }
   };
 
-  // Fonction d'enregistrement
   const register = async (userData) => {
-    setLoading(true); // Démarrer le chargement pendant l'enregistrement
+    setLoading(true);
     try {
-      const response = await authApi.register(userData);
-      if (response.token && response.user) {
-        setUser(response.user);  // Mettre à jour l'utilisateur dans l'état
-        return response.user;
+      const response = await fetch('https://resto-back-qsyz.onrender.com/api/user/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setUser(data.user);
+        return data.user;
       }
-      throw new Error('Réponse du serveur invalide');
+      throw new Error(data.message || 'Erreur lors de l’inscription');
     } catch (error) {
       console.error('Erreur d\'inscription:', error);
-      throw new Error('Erreur lors de l\'inscription ou problème de connexion');
+      throw new Error('Impossible de s’inscrire');
     } finally {
-      setLoading(false); // Terminer le chargement après l'enregistrement
+      setLoading(false);
     }
   };
 
-  // Fonction de déconnexion
   const logout = () => {
-    setUser(null);  // Réinitialiser l'utilisateur dans l'état
+    setUser(null);
   };
 
-  // Mise à jour de l'utilisateur dans le contexte
   const updateUser = (userData) => {
     setUser(userData);
   };
 
-  // Création du contexte pour éviter le recalcul des valeurs à chaque rendu
   const value = useMemo(() => ({
-    user,
-    loading,
-    login,
-    register,
-    logout,
-    updateUser,
+    user, loading, login, register, logout, updateUser,
   }), [user, loading]);
 
   return (
@@ -76,12 +76,8 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Validation des props
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,  // Valider que 'children' est un élément React
+  children: PropTypes.node.isRequired,
 };
 
-// Hook personnalisé pour accéder au contexte d'authentification
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export { AuthContext }; // Exporter uniquement le contexte

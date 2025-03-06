@@ -160,7 +160,7 @@ function RecipeCreate() {
                             />
                           </label>
                         </div>
-                        <p className="text-xs text-gray-500">PNG, JPG jusqu'à 10MB</p>
+                        <p className="text-xs text-gray-500">PNG, JPG jusqu/à 10MB</p>
                       </div>
                     </div>
                   </div>
@@ -204,7 +204,7 @@ function RecipeCreate() {
                             />
                           </label>
                         </div>
-                        <p className="text-xs text-gray-500">MP4, WebM jusqu'à 50MB</p>
+                        <p className="text-xs text-gray-500">MP4, WebM jusqu/à 50MB</p>
                       </div>
                     </div>
                   </div>
