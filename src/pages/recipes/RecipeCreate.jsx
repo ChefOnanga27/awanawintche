@@ -51,7 +51,6 @@ function RecipeCreate() {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      // Convertir les ingrédients et instructions en tableaux
       const ingredientsArray = values.ingredients
         .split('\n')
         .filter(ingredient => ingredient.trim() !== '');
@@ -60,7 +59,6 @@ function RecipeCreate() {
         .split('\n')
         .filter(instruction => instruction.trim() !== '');
 
-      // Créer une nouvelle recette avec un ID unique
       const newRecipe = {
         id: Date.now(),
         ...values,
@@ -71,24 +69,17 @@ function RecipeCreate() {
         createdAt: new Date().toISOString(),
       };
 
-      // Récupérer les recettes existantes
       const existingRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
       
-      // Ajouter la nouvelle recette au tableau
       const updatedRecipes = [newRecipe, ...existingRecipes];
 
-      // Sauvegarder dans le localStorage
       localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
 
-      // Réinitialiser le formulaire
       resetForm();
       setImagePreview(null);
       setVideoPreview(null);
 
-      // Afficher un message de succès
       alert('Recette créée avec succès !');
-
-      // Rediriger vers la page des recettes
       navigate('/recipes');
     } catch (error) {
       console.error('Erreur lors de la création:', error);
@@ -101,9 +92,9 @@ function RecipeCreate() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Créer une nouvelle recette</h1>
+        <h1 className="text-4xl font-extrabold text-gray-800 mb-8">Créer une nouvelle recette</h1>
         
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-xl p-8 space-y-6">
           <Formik
             initialValues={{
               title: '',
@@ -120,23 +111,21 @@ function RecipeCreate() {
           >
             {({ errors, touched, isSubmitting, setFieldValue }) => (
               <Form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Champ d'upload d'image */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Photo de la recette
-                    </label>
-                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <label className="block text-lg font-medium text-gray-700 mb-2">Photo de la recette</label>
+                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary focus:border-primary">
                       <div className="space-y-1 text-center">
                         {imagePreview ? (
                           <img
                             src={imagePreview}
                             alt="Aperçu"
-                            className="mx-auto h-32 w-32 object-cover rounded-md"
+                            className="mx-auto h-40 w-40 object-cover rounded-md"
                           />
                         ) : (
                           <svg
-                            className="mx-auto h-12 w-12 text-gray-400"
+                            className="mx-auto h-16 w-16 text-gray-400"
                             stroke="currentColor"
                             fill="none"
                             viewBox="0 0 48 48"
@@ -160,27 +149,25 @@ function RecipeCreate() {
                             />
                           </label>
                         </div>
-                        <p className="text-xs text-gray-500">PNG, JPG jusqu/à 10MB</p>
+                        <p className="text-xs text-gray-500 mt-1">PNG, JPG jusqu'à 10MB</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Champ d'upload de vidéo */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Vidéo de la recette (optionnel)
-                    </label>
-                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <label className="block text-lg font-medium text-gray-700 mb-2">Vidéo de la recette (optionnel)</label>
+                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary focus:border-primary">
                       <div className="space-y-1 text-center">
                         {videoPreview ? (
                           <video
                             src={videoPreview}
-                            className="mx-auto h-32 w-32 object-cover rounded-md"
+                            className="mx-auto h-40 w-40 object-cover rounded-md"
                             controls
                           />
                         ) : (
                           <svg
-                            className="mx-auto h-12 w-12 text-gray-400"
+                            className="mx-auto h-16 w-16 text-gray-400"
                             stroke="currentColor"
                             fill="none"
                             viewBox="0 0 48 48"
@@ -204,7 +191,7 @@ function RecipeCreate() {
                             />
                           </label>
                         </div>
-                        <p className="text-xs text-gray-500">MP4, WebM jusqu/à 50MB</p>
+                        <p className="text-xs text-gray-500 mt-1">MP4, WebM jusqu'à 50MB</p>
                       </div>
                     </div>
                   </div>
@@ -212,13 +199,11 @@ function RecipeCreate() {
 
                 {/* Autres champs du formulaire */}
                 <div>
-                  <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                    Titre de la recette
-                  </label>
+                  <label htmlFor="title" className="block text-lg font-medium text-gray-700">Titre de la recette</label>
                   <Field
                     type="text"
                     name="title"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
                     placeholder="Ex: Poulet rôti aux herbes"
                   />
                   {errors.title && touched.title && (
@@ -227,14 +212,12 @@ function RecipeCreate() {
                 </div>
 
                 <div>
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                    Description
-                  </label>
+                  <label htmlFor="description" className="block text-lg font-medium text-gray-700">Description</label>
                   <Field
                     as="textarea"
                     name="description"
                     rows="3"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
                     placeholder="Une brève description de votre recette"
                   />
                   {errors.description && touched.description && (
@@ -242,52 +225,39 @@ function RecipeCreate() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="duration" className="block text-sm font-medium text-gray-700">
-                      Durée de préparation
-                    </label>
-                    <Field
-                      type="text"
-                      name="duration"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-                      placeholder="Ex: 1h30"
-                    />
-                    {errors.duration && touched.duration && (
-                      <div className="text-red-500 text-sm mt-1">{errors.duration}</div>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="difficulty" className="block text-sm font-medium text-gray-700">
-                      Niveau de difficulté
-                    </label>
-                    <Field
-                      as="select"
-                      name="difficulty"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-                    >
-                      <option value="">Sélectionner</option>
-                      <option value="Facile">Facile</option>
-                      <option value="Moyen">Moyen</option>
-                      <option value="Difficile">Difficile</option>
-                    </Field>
-                    {errors.difficulty && touched.difficulty && (
-                      <div className="text-red-500 text-sm mt-1">{errors.difficulty}</div>
-                    )}
-                  </div>
+                <div>
+                  <label htmlFor="duration" className="block text-lg font-medium text-gray-700">Durée (en minutes)</label>
+                  <Field
+                    type="text"
+                    name="duration"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                  />
+                  {errors.duration && touched.duration && (
+                    <div className="text-red-500 text-sm mt-1">{errors.duration}</div>
+                  )}
                 </div>
 
                 <div>
-                  <label htmlFor="ingredients" className="block text-sm font-medium text-gray-700">
-                    Ingrédients
-                  </label>
+                  <label htmlFor="difficulty" className="block text-lg font-medium text-gray-700">Difficulté</label>
+                  <Field as="select" name="difficulty" className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    <option value="">Sélectionner une difficulté</option>
+                    <option value="facile">Facile</option>
+                    <option value="moyenne">Moyenne</option>
+                    <option value="difficile">Difficile</option>
+                  </Field>
+                  {errors.difficulty && touched.difficulty && (
+                    <div className="text-red-500 text-sm mt-1">{errors.difficulty}</div>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="ingredients" className="block text-lg font-medium text-gray-700">Ingrédients</label>
                   <Field
                     as="textarea"
                     name="ingredients"
-                    rows="4"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-                    placeholder="Liste des ingrédients (un par ligne)"
+                    rows="5"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                    placeholder="Listez les ingrédients séparés par des sauts de ligne"
                   />
                   {errors.ingredients && touched.ingredients && (
                     <div className="text-red-500 text-sm mt-1">{errors.ingredients}</div>
@@ -295,44 +265,32 @@ function RecipeCreate() {
                 </div>
 
                 <div>
-                  <label htmlFor="instructions" className="block text-sm font-medium text-gray-700">
-                    Instructions
-                  </label>
+                  <label htmlFor="instructions" className="block text-lg font-medium text-gray-700">Instructions</label>
                   <Field
                     as="textarea"
                     name="instructions"
-                    rows="6"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-                    placeholder="Les étapes de préparation"
+                    rows="5"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                    placeholder="Décrivez les étapes de préparation"
                   />
                   {errors.instructions && touched.instructions && (
                     <div className="text-red-500 text-sm mt-1">{errors.instructions}</div>
                   )}
                 </div>
 
-                <div className="flex justify-end space-x-4">
-                  <button
-                    type="button"
-                    onClick={() => navigate('/recipes')}
-                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                  >
-                    Annuler
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50"
-                  >
-                    {isSubmitting ? 'Création...' : 'Créer la recette'}
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Création en cours...' : 'Créer la recette'}
+                </button>
               </Form>
             )}
           </Formik>
         </div>
       </div>
     </div>
-
   );
 }
 
