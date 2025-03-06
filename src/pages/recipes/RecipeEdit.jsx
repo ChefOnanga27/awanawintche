@@ -1,4 +1,4 @@
-const BASE_URL = 'https://resto-back-qsyz.onrender.com/api'; // Lien de ton API
+const BASE_URL = 'https://resto-back-qsyz.onrender.com/api/recette'; // Lien de ton API
 
 // Fonction générique pour les requêtes HTTP avec gestion des erreurs
 async function request(endpoint, options = {}) {
@@ -29,11 +29,11 @@ async function request(endpoint, options = {}) {
 
 // API pour les recettes
 export const recipesApi = {
-  getAll: () => request('/recette'),
-  getById: (id) => request(`/recette/${id}`),
-  create: (data) => request('/recette', { method: 'POST', body: JSON.stringify(data) }),
-  update: (id, data) => request(`/recette/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
-  delete: (id) => request(`/recette/${id}`, { method: 'DELETE' }),
+  getAll: () => request('/'),
+  getById: (id) => request(`//${id}`),
+  create: (data) => request('/', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id, data) => request(`/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (id) => request(`/${id}`, { method: 'DELETE' }),
 };
 
 // API pour l'authentification

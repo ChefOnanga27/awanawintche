@@ -10,7 +10,7 @@ function Sidebar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/home');
+    navigate('/');
     setIsSidebarOpen(false);
   };
 
