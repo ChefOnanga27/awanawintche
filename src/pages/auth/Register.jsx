@@ -9,14 +9,14 @@ function Register() {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
       role: 'user',
     },
     validationSchema: Yup.object({
-      username: Yup.string()
+      name: Yup.string()
         .required('Nom requis')
         .min(2, 'Le nom doit contenir au moins 2 caractères'),
       email: Yup.string()
@@ -33,8 +33,8 @@ function Register() {
         .required('Rôle requis'),
     }),
     onSubmit: async (values) => {
-      setErrorMessage(''); // Réinitialiser l'erreur avant soumission
-      console.log('Données soumises:', values); // Vérifier si les valeurs sont bien récupérées
+      setErrorMessage('');
+      console.log('Données envoyées:', values);
 
       try {
         const response = await fetch('https://resto-back-qsyz.onrender.com/api/user/register', {
@@ -45,17 +45,18 @@ function Register() {
           body: JSON.stringify(values),
         });
 
+        const data = await response.json(); // Convertir la réponse en JSON
+
         if (response.ok) {
-          console.log('Inscription réussie');
+          console.log('Inscription réussie:', data);
           navigate('/login');
         } else {
-          const data = await response.json();
+          console.error('Erreur d\'inscription:', data);
           setErrorMessage(data.message || "Erreur lors de l'inscription");
-          console.error("Erreur d'inscription:", data.message);
         }
       } catch (error) {
+        console.error('Erreur réseau:', error);
         setErrorMessage("Impossible de se connecter au serveur.");
-        console.error("Erreur lors de l'inscription:", error);
       }
     },
   });
@@ -75,27 +76,25 @@ function Register() {
           </p>
         </div>
 
-        {errorMessage && (
-          <div className="text-red-500 text-sm text-center">{errorMessage}</div>
-        )}
+        {errorMessage && <div className="text-red-500 text-sm text-center">{errorMessage}</div>}
 
         <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Nom complet
               </label>
               <input
-                id="username"
-                name="username"
+                id="name"
+                name="name"
                 type="text"
-                value={formik.values.username}
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
-              {formik.touched.username && formik.errors.username && (
-                <div className="text-red-500 text-sm mt-1">{formik.errors.username}</div>
+              {formik.touched.name && formik.errors.name && (
+                <div className="text-red-500 text-sm mt-1">{formik.errors.name}</div>
               )}
             </div>
 
@@ -179,7 +178,7 @@ function Register() {
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
-              S/inscrire
+              S'inscrire
             </button>
           </div>
         </form>
