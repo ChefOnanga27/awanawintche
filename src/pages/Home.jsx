@@ -3,27 +3,73 @@ import { Link } from 'react-router-dom';
 import RecipeCard from './recipes/RecipeCard';
 import Hero from '../components/layout/Hero';
 import { useAuth } from '../context/AuthContext';
-import SearchBar from '../components/layout/SearchBar'; // Importing SearchBar
+import SearchBar from '../components/layout/SearchBar';
 
 function Home() {
   const { user } = useAuth();
   const [recentRecipes, setRecentRecipes] = useState([]);
   const [oldRecipes, setOldRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showRecent, setShowRecent] = useState(true); // State to toggle between recent and old recipes
 
   useEffect(() => {
     const recipes = [
       {
         id: 1,
-        title: 'Antilope au chocolat',
+        title: 'Feuille de manioc',
         description: 'Un délicieux poulet rôti avec des herbes fraîches',
-        image: '/poulet roti.jpg',
+        image: '/feuille de manioc.jpg',
         duration: '1h30',
         difficulty: 'Moyen',
         createdAt: '2024-01-15'
       },
       {
         id: 2,
+        title: 'Choux aux poissons',
+        description: 'Une salade césar classique avec sauce maison',
+        image: '/chou.jpg',
+        duration: '20min',
+        difficulty: 'Facile',
+        createdAt: '2024-01-14'
+      },
+      {
+        id: 3,
+        title: 'Ratatouille',
+        description: 'Une salade césar classique avec sauce maison',
+        image: '/ratatouille.jpg',
+        duration: '20min',
+        difficulty: 'Facile',
+        createdAt: '2024-01-14'
+      },
+      {
+        id: 4,
+        title: 'Nkumu',
+        description: 'Une salade césar classique avec sauce maison',
+        image: '/Nkumu Andza.jfif',
+        duration: '20min',
+        difficulty: 'Facile',
+        createdAt: '2024-01-14'
+      },
+      {
+        id: 5,
+        title: 'Salade Cesar',
+        description: 'Une salade césar classique avec sauce maison',
+        image: '/salade Cesar.jpg',
+        duration: '20min',
+        difficulty: 'Facile',
+        createdAt: '2024-01-14'
+      },
+      {
+        id: 6,
+        title: 'Tartes aux pommes',
+        description: 'Une salade césar classique avec sauce maison',
+        image: '/tarte aux pommes.jpg',
+        duration: '20min',
+        difficulty: 'Facile',
+        createdAt: '2024-01-14'
+      },
+      {
+        id: 7,
         title: 'Poulet Roti',
         description: 'Une salade césar classique avec sauce maison',
         image: '/poulet roti.jpg',
@@ -32,41 +78,24 @@ function Home() {
         createdAt: '2024-01-14'
       },
       {
-        id: 3,
-        title: 'Chou au poisson',
-        description: 'Une tarte aux pommes traditionnelle',
-        image: '/chou.jpg',
-        duration: '1h',
-        difficulty: 'Moyen',
-        createdAt: '2023-12-25'
-      },
-      {
-        id: 4,
-        title: 'Ratatouille',
-        description: 'Un plat végétarien traditionnel français',
-        image: '/ratatouille.jpg',
-        duration: '1h15',
+        id: 8,
+        title: 'Poulet Roti',
+        description: 'Une salade césar classique avec sauce maison',
+        image: '/poulet roti.jpg',
+        duration: '20min',
         difficulty: 'Facile',
-        createdAt: '2023-12-20'
+        createdAt: '2024-01-14'
       },
       {
-        id: 3,
-        title: 'Chou au poisson',
-        description: 'Une tarte aux pommes traditionnelle',
-        image: '/chou.jpg',
-        duration: '1h',
-        difficulty: 'Moyen',
-        createdAt: '2023-12-25'
-      },
-      {
-        id: 4,
-        title: 'Ratatouille',
-        description: 'Un plat végétarien traditionnel français',
-        image: '/ratatouille.jpg',
-        duration: '1h15',
+        id: 9,
+        title: 'Poulet Roti',
+        description: 'Une salade césar classique avec sauce maison',
+        image: '/poulet roti.jpg',
+        duration: '20min',
         difficulty: 'Facile',
-        createdAt: '2023-12-20'
+        createdAt: '2024-01-14'
       }
+      // Ajouter les autres recettes ici...
     ];
 
     const sortedRecipes = [...recipes].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -85,46 +114,66 @@ function Home() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-900"></div> {/* Vert pur au lieu du rouge */}
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-900"></div> 
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-[#d8f3dc]"> {/* Fond vert clair */}
+    <div className="container mx-auto px-4 py-8 bg-[#d8f3dc]">
       <Hero />
-      
-      {/* Integrating SearchBar */}
+
+      {/* Header avec les boutons */}
+      <div className="bg-gradient-to-r from-green-800 to-green-900 p-4 rounded-lg mb-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-white text-3xl font-bold">Bienvenue sur notre site de recettes !</h1>
+          {user ? (
+            <Link to="/profile" className="bg-white text-green-500 hover:bg-gray-100 px-6 py-2 rounded-full font-semibold transition-colors">
+              Mon Profil
+            </Link>
+          ) : (
+            <div className="flex space-x-4">
+              <Link to="/register" className="bg-white text-green-500 hover:bg-gray-100 px-6 py-2 rounded-full font-semibold transition-colors">
+                S'inscrire
+              </Link>
+              <Link to="/login" className="border-2 border-white text-white hover:bg-white/10 px-6 py-2 rounded-full font-semibold transition-colors">
+                Se connecter
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Barre de recherche */}
       <SearchBar />
 
-      {!user && (
-        <div className="my-8 bg-gradient-to-r from-green-800 to-green-900 rounded-xl overflow-hidden shadow-lg"> {/* Vert pur */}
-          <div className="px-6 py-8 sm:px-8 md:px-12 flex flex-col sm:flex-row items-center justify-between">
-            <div className="text-white text-center sm:text-left mb-6 sm:mb-0">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-2">Partagez Vos Recettes !</h2>
-              <p className="text-white/90">Rejoignez notre communauté et partagez vos meilleures recettes avec le monde.</p>
-            </div>
-            <div className="flex space-x-4">
-              <Link to="/register" className="bg-white text-green-500 hover:bg-gray-100 px-6 py-2 rounded-full font-semibold transition-colors">S/inscrire</Link>
-              <Link to="/login" className="border-2 border-white text-white hover:bg-white/10 px-6 py-2 rounded-full font-semibold transition-colors">Se connecter</Link>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Boutons pour afficher les recettes récentes et anciennes */}
+      <div className="flex space-x-4 mb-6">
+        <button
+          className={`${
+            showRecent ? 'bg-green-500' : 'bg-gray-200'
+          } text-white py-2 px-4 rounded-lg hover:bg-green-600`}
+          onClick={() => setShowRecent(true)}
+        >
+          Recettes Récentes
+        </button>
+        <button
+          className={`${
+            !showRecent ? 'bg-green-500' : 'bg-gray-200'
+          } text-white py-2 px-4 rounded-lg hover:bg-green-600`}
+          onClick={() => setShowRecent(false)}
+        >
+          Recettes Anciennes
+        </button>
+      </div>
 
+      {/* Affichage des recettes en fonction du bouton cliqué */}
       <section className="my-12">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Recettes Récentes</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">
+          {showRecent ? 'Recettes Récentes' : 'Recettes Anciennes'}
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recentRecipes.map(recipe => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
-      </section>
-
-      <section className="my-12">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Recettes Anciennes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {oldRecipes.map(recipe => (
+          {(showRecent ? recentRecipes : oldRecipes).map(recipe => (
             <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
