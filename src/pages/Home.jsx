@@ -23,79 +23,7 @@ function Home() {
         difficulty: 'Moyen',
         createdAt: '2024-01-15'
       },
-      {
-        id: 2,
-        title: 'Choux aux poissons',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/chou.jpg',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      },
-      {
-        id: 3,
-        title: 'Ratatouille',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/ratatouille.jpg',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      },
-      {
-        id: 4,
-        title: 'Nkumu',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/Nkumu Andza.jfif',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      },
-      {
-        id: 5,
-        title: 'Salade Cesar',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/salade Cesar.jpg',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      },
-      {
-        id: 6,
-        title: 'Tartes aux pommes',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/tarte aux pommes.jpg',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      },
-      {
-        id: 7,
-        title: 'Poulet Roti',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/poulet roti.jpg',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      },
-      {
-        id: 8,
-        title: 'Poulet Roti',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/poulet roti.jpg',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      },
-      {
-        id: 9,
-        title: 'Poulet Roti',
-        description: 'Une salade césar classique avec sauce maison',
-        image: '/poulet roti.jpg',
-        duration: '20min',
-        difficulty: 'Facile',
-        createdAt: '2024-01-14'
-      }
-      // Ajouter les autres recettes ici...
+      // ... autres recettes
     ];
 
     const sortedRecipes = [...recipes].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -148,7 +76,7 @@ function Home() {
       <SearchBar />
 
       {/* Boutons pour afficher les recettes récentes et anciennes */}
-      <div className="flex space-x-4 mb-6">
+      <div className="flex space-x-4 mb-6 justify-center sm:justify-start">
         <button
           className={`${
             showRecent ? 'bg-green-500' : 'bg-gray-200'
