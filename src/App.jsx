@@ -4,7 +4,6 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // composants Layout
 import Sidebar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
 
 // Page Composants
 import Home from './pages/Home';
@@ -56,8 +55,6 @@ function App() {
               />
             </Routes>
           </main>
-
-          <Footer />
         </div>
       </Router>
     </AuthProvider>
