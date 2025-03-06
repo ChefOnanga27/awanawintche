@@ -41,7 +41,7 @@ function RecipeCard({ recipe }) {
       <img
         src={recipe.image}
         alt={recipe.title}
-        className="w-full h-48 object-cover"
+        className="w-full h-64 object-cover"
       />
       
       <div className="p-4">
@@ -56,7 +56,7 @@ function RecipeCard({ recipe }) {
         {/* Bouton Commentaires */}
         <button
           onClick={() => setShowComments(!showComments)}
-          className="text-green-500 hover:text-green-700 font-medium" // Applique le vert
+          className="text-green-500 hover:text-green-900 font-medium"
         >
           {showComments ? 'Masquer les commentaires' : `Voir les commentaires (${comments.length})`}
         </button>
@@ -84,11 +84,11 @@ function RecipeCard({ recipe }) {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Ajouter un commentaire..."
-                  className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50" // Vert au focus
+                  className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-500 focus:ring-opacity-50" // Vert
+                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-500 focus:ring-opacity-50"
                 >
                   Publier
                 </button>

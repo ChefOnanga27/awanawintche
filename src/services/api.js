@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://restaurant-backend-snowy.vercel.app/', // Remplace par l'URL correcte de ton API
+  baseURL: 'https://resto-back-qsyz.onrender.com', // Remplace par l'URL correcte de ton API
 });
 
 // Intercepteur pour ajouter le token aux requêtes (sans localStorage)
@@ -16,7 +16,7 @@ api.interceptors.request.use((config) => {
 export const authApi = {
   login: async (credentials) => {
     try {
-      const response = await api.post('/auth/login', credentials);
+      const response = await api.post('/api/user/login', credentials);
       return response.data;
     } catch (error) {
       throw error.response?.data || 'Erreur de connexion';
@@ -25,7 +25,7 @@ export const authApi = {
   
   register: async (userData) => {
     try {
-      const response = await api.post('/auth/register', userData);
+      const response = await api.post('/api/user/register', userData);
       return response.data;
     } catch (error) {
       throw error.response?.data || 'Erreur lors de l\'inscription';
@@ -60,7 +60,7 @@ export const uploadUserAvatar = async (file, token) => {
     const formData = new FormData();
     formData.append('avatar', file);
 
-    const response = await api.post('/users/upload-avatar', formData, {
+    const response = await api.post('/user/upload-avatar', formData, {
       headers: { 
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'

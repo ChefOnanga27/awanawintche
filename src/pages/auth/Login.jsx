@@ -19,7 +19,7 @@ function Login() {
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       // Appel à l'API pour se connecter et récupérer le rôle
-      const response = await fetch('https://restaurant-backend-git-main-chefonanga27s-projects.vercel.app/auth/login', {
+      const response = await fetch('https://resto-back-qsyz.onrender.com/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
