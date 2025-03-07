@@ -23,7 +23,106 @@ function Home() {
         difficulty: 'Moyen',
         createdAt: '2024-01-15'
       },
-      // ... autres recettes
+      {
+        id: 2,
+        title: 'Poulet Yassa',
+        description: 'Un poulet mariné au citron et aux oignons',
+        image: '/poulet-yassa.jpg',
+        duration: '1h',
+        difficulty: 'Facile',
+        createdAt: '2024-02-01'
+      },
+      {
+        id: 3,
+        title: 'Poisson braisé',
+        description: 'Poisson grillé avec une sauce épicée',
+        image: '/poisson-braise.jpg',
+        duration: '45min',
+        difficulty: 'Moyen',
+        createdAt: '2024-03-01'
+      },
+      {
+        id: 4,
+        title: 'Riz Jollof',
+        description: 'Riz épicé avec des légumes et du poulet',
+        image: '/riz-jollof.jpg',
+        duration: '1h',
+        difficulty: 'Moyen',
+        createdAt: '2024-01-10'
+      },
+      {
+        id: 5,
+        title: 'Soupe à l\'arachide',
+        description: 'Une soupe crémeuse à base d\'arachides',
+        image: '/soupe-arachide.jpg',
+        duration: '1h15',
+        difficulty: 'Difficile',
+        createdAt: '2023-12-05'
+      },
+      {
+        id: 6,
+        title: 'Attiéké',
+        description: 'Un plat traditionnel à base de manioc',
+        image: '/attieke.jpg',
+        duration: '45min',
+        difficulty: 'Facile',
+        createdAt: '2024-01-20'
+      },
+      {
+        id: 7,
+        title: 'Boudin créole',
+        description: 'Un boudin épicé à base de porc et de riz',
+        image: '/boudin-creole.jpg',
+        duration: '2h',
+        difficulty: 'Difficile',
+        createdAt: '2024-02-10'
+      },
+      {
+        id: 8,
+        title: 'Ndolé',
+        description: 'Plat camerounais à base de feuilles d\'amarante, arachides et viande',
+        image: '/ndole.jpg',
+        duration: '1h30',
+        difficulty: 'Moyen',
+        createdAt: '2024-01-30'
+      },
+      {
+        id: 9,
+        title: 'Poisson frit',
+        description: 'Poisson frit accompagné de légumes frais',
+        image: '/poisson-frit.jpg',
+        duration: '1h',
+        difficulty: 'Facile',
+        createdAt: '2024-03-05'
+      },
+      {
+        id: 10,
+        title: 'Mafé',
+        description: 'Un ragoût de viande en sauce d\'arachide',
+        image: '/mafe.jpeg',
+        duration: '1h45',
+        difficulty: 'Moyen',
+        createdAt: '2024-01-25'
+      },
+      {
+        id: 11,
+        title: 'Tô',
+        description: 'Une pâte de maïs accompagnée de sauce tomate ou d\'arachides',
+        image: '/to.jpg',
+        duration: '1h',
+        difficulty: 'Facile',
+        createdAt: '2023-12-15'
+      },
+      {
+        id: 12,
+        title: 'Kedjenou',
+        description: 'Un ragoût de poulet cuit lentement avec des légumes',
+        image: '/kedjenou.jpg',
+        duration: '2h',
+        difficulty: 'Moyen',
+        createdAt: '2024-02-05'
+      }
+      // Ajouter d'autres recettes si nécessaire
     ];
 
     const sortedRecipes = [...recipes].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -42,7 +141,7 @@ function Home() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-900"></div> 
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-900"></div>
       </div>
     );
   }
@@ -53,18 +152,29 @@ function Home() {
 
       {/* Header avec les boutons */}
       <div className="bg-gradient-to-r from-green-800 to-green-900 p-4 rounded-lg mb-8">
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-3xl font-bold">Bienvenue sur notre site de recettes !</h1>
+        <div className="flex flex-col sm:flex-row sm:justify-between items-center">
+          <h1 className="text-white text-3xl font-bold text-center sm:text-left mb-4 sm:mb-0">
+            Bienvenue sur notre site de recettes !
+          </h1>
           {user ? (
-            <Link to="/profile" className="bg-white text-green-500 hover:bg-gray-100 px-6 py-2 rounded-full font-semibold transition-colors">
+            <Link
+              to="/profile"
+              className="bg-white text-green-500 hover:bg-gray-100 px-6 py-2 rounded-full font-semibold transition-colors w-full sm:w-auto text-center"
+            >
               Mon Profil
             </Link>
           ) : (
-            <div className="flex space-x-4">
-              <Link to="/register" className="bg-white text-green-500 hover:bg-gray-100 px-6 py-2 rounded-full font-semibold transition-colors">
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto text-center">
+              <Link
+                to="/register"
+                className="bg-white text-green-500 hover:bg-gray-100 px-6 py-2 rounded-full font-semibold transition-colors w-full sm:w-auto"
+              >
                 S'inscrire
               </Link>
-              <Link to="/login" className="border-2 border-white text-white hover:bg-white/10 px-6 py-2 rounded-full font-semibold transition-colors">
+              <Link
+                to="/login"
+                className="border-2 border-white text-white hover:bg-white/10 px-6 py-2 rounded-full font-semibold transition-colors w-full sm:w-auto"
+              >
                 Se connecter
               </Link>
             </div>
