@@ -31,7 +31,7 @@ function Sidebar() {
         <div className="p-5 flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center space-x-3 mb-6">
-            <img src="/logo.jpg" alt="logo" className="h-8 w-8 rounded-full" />
+            <img src="/logo.png" alt="logo" className="h-8 w-8 rounded-full" />
             <Link to="/" className="text-xl font-bold text-white">Mon secret culinaire</Link>
           </div>
 
